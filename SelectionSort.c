@@ -38,7 +38,7 @@ void benchmark_sort(int start_size, int inc_size, int max_size, const char *file
 
     srand(time(NULL));
     printf("Benchmarking selection sort...\n");
-    printf("Array size\tTime (nanoseconds)\n");
+    printf("Array size\tTime (milliseconds)\n");
 
     for (int n = start_size; n <= max_size; n += inc_size) {
         int *arr = malloc(n * sizeof(int));
@@ -56,6 +56,7 @@ void benchmark_sort(int start_size, int inc_size, int max_size, const char *file
         clock_gettime(CLOCK_REALTIME, &t_stop);
 
         long duration = nano_seconds(&t_start, &t_stop);
+        duration = duration * 0.000001; // change factor depending on unit (* 1 for nanoseconds)
 
         // Print to console
         printf("%d\t\t%ld\n", n, duration);
@@ -72,10 +73,10 @@ void benchmark_sort(int start_size, int inc_size, int max_size, const char *file
 
 int main() {
     // Parameters
-    int start_size = 100;   // Initial array size
-    int inc_size = 100;     // Increment in array size
-    int max_size = 2000;    // Maximum array size
-    const char *filename = "benchmark_data.dat"; // Output .dat file name
+    const int start_size = 1000;   // Initial array size
+    const int inc_size = 1000;     // Increment in array size
+    const int max_size = 100000;    // Maximum array size
+    const char *filename = "SelectionSort_results.dat"; // Output .dat file name
 
     benchmark_sort(start_size, inc_size, max_size, filename);
 
