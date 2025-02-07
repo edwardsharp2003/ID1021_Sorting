@@ -11,3 +11,7 @@ CTestTestfile.cmake
 _deps
 out
 auxil
+GnuMS.txt
+GnuSS.txt
+GnuIS.txt
+GnuGraphs.txt

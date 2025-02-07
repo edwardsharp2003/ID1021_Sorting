@@ -14,7 +14,7 @@
 \begin{document}
 
 \title{
-    \textbf{REPORT NAME}
+    \textbf{Report Sorting}
 }
 \author{Edward Sharp}
 \date{06-02-25}
@@ -22,6 +22,39 @@
 \maketitle
 
 \section*{Introduction}
+In this report, different methods for sorting an array will be analysed and tested.
+The theory behind their time complexities will be discussed and results compared between the different sorting algorithms.
+
+\section*{Setting up the environment and project}
+From previous reports, the \texttt{nano\_seconds}-functions will be used to time the algorithm's runtime.
+Due to variances in runtime though, conversion factors will sometimes be used to give the results in other units.
+This will be clearly presented in the figures.
+
+In addition, a \texttt{benchmark\_sort}-function will be used to conduct the benchmark, and store the data.
+The \texttt{start\_size}, \texttt{inc\_size} and \texttt{max\_size} can all be changed later in the \texttt{main}-function,
+to alter the start, max, and increment size of the arrays.
+The \texttt{filename}, which is specified in the \texttt{main}-function, is opened in write mode,
+table headers are printed (Array size, Time), the array is initialised and populated with random values as well as allocated memory for,
+the sort runtime is measured and calculated, results printed in terminal and .dat file, and the memory is freed.
+This loop continues for the next array size, increased by \texttt{inc\_size}, and the process repeats until \texttt{max\_size} is reached and benchmarked.
+
+To plot it, gnuplot has been used to produce png-files used in this report.
+This is the commands used, put in a txt-document and executed from a makefile:
+\begin{minted}
+set xlabel "Array Size (n * 10^3)" font "Arial,18"
+set ylabel "Time Taken (nanoseconds)" font "Arial,18"
+set format x "%g"
+set xrange [0:1000]
+set xtics 100
+set xtics font "Arial,14"
+set ytics font "Arial,14"
+set title ""
+plot "MergeSort_results.dat" using ($1/1000):2 with linespoints title ""
+set terminal png size 1280,720 enhanced font "Arial,16"
+set output "MergeSort_plot.png"
+replot
+set terminal wxt
+\end{minted}
 
 \section*{Selection Sort}
 
@@ -132,7 +165,7 @@ This leads to the time complexity of the best case scenario to be $O(n)$.
 Merge sort works by recursively dividing an array into two halves, sorting each half individually,
 and then merging the two sorted halves back together.
 The splitting is done by calculating the midpoint index of the array.
-Below is the code for the recursive sorting function and mergin process:
+Below is the code for the recursive sorting function and merging process:
 
 \begin{minted}{c}
 void sort(int *org, int *aux, int lo, int hi)
@@ -201,11 +234,18 @@ which takes $O(n)$ time.
 When looking at figure 3, it could be hard to see that this algorithm would follow $O(n \log n)$ time,
 it looks like it is just $O(n)$.
 This however, is not fully surprising.
-For large $n$, the $n \log n)$-graph looks very similar to that of a linear graph because the linear element scales faster than the logarithmic element.
-It can also be noted that the run time of the merge sort algorithm is significantly faster than that of the insertion and selection sort.
+For large $n$, the $n \log n$-graph looks very similar to that of a linear graph because the linear element scales faster than the logarithmic element.
 
-\section*{Quick Sort}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{growth_plot}
+    \caption{n, log(n) and n(log(n)) plotted}
+    \label{fig:growth_plot}
+\end{figure}
 
+This is visualised in figure 4, where it can be seen that the logarithmic aspect of the function $(n \log n)$ is only really
+noticeable right at the start.
+It then smoothens out into what looks like a linear function.
 
 
 \section*{1}
